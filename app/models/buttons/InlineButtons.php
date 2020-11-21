@@ -47,6 +47,22 @@ class InlineButtons {
     }
 
     public static function languages() {
-        return "";
+        $languages = Language::all();
+
+        $buttons = [];
+
+        $buttons[] = [[
+            'text' => DEFAULT_LANGUAGE,
+            'callback_data' => 'language__0'
+        ]];
+
+        foreach($languages as $language) {
+            $buttons[] = [[
+                'text' => base64_decode($language->emoji)." ".$language->name,
+                'callback_data' => 'language__'.$language->code
+            ]];
+        }
+
+        return $buttons;
     }
 }

@@ -45,6 +45,12 @@ return [
     'moderators_list' => 'Список',
     'moderators_add' => 'Добавить',
     'moderators_permissions' => 'Привилегии',
+    'categories' => 'Категории',
+    'categories_list' => 'Список',
+    'categories_add' => 'Добавить',
+    'channels' => 'Каналы',
+    'channels_list' => 'Список',
+    'channels_moderation' => 'На модерации',
 
     'developer_admin_panel' => 'Админка',
     'developer_webhook' => 'Webhook',

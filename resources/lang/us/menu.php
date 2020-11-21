@@ -45,6 +45,12 @@ return [
     'moderators_list' => 'List',
     'moderators_add' => 'Add',
     'moderators_permissions' => 'Permissions',
+    'categories' => 'Categories',
+    'categories_list' => 'List',
+    'categories_add' => 'Add',
+    'channels' => 'Channels',
+    'channels_list' => 'List',
+    'channels_moderation' => 'On moderation',
 
     'developer_admin_panel' => 'Admin panel',
     'developer_webhook' => 'Webhook',

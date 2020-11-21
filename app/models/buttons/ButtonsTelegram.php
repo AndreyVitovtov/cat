@@ -8,13 +8,13 @@ use App\models\BotUsers;
 
 class ButtonsTelegram {
 
-    public static function main_menu($userId) {
+    public static function main_menu($userId = null) {
 //        $user = BotUsers::find($userId);
 
         return [
-            ["{search_ads}", "{create_ad}"],
-            ["{my_ads}", "{contacts}"],
-            ["{edit_country}"]
+            ["{search_channels}"],
+            ["{add_channel}"],
+            ["{contacts}"]
         ];
     }
 
@@ -46,6 +46,15 @@ class ButtonsTelegram {
                 'text' => '{send_location}',
                 'request_location' => true
             ], "{back}"]
+        ];
+    }
+
+
+    public function search_channels() {
+        return [
+            ['{search_top}'],
+            ['{search_by_countries}', '{search_by_categories}'],
+            ['{back}']
         ];
     }
 }

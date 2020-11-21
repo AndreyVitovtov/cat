@@ -36,15 +36,8 @@ class CreateUsersTable extends Migration
             $table->integer('active')->nullable();
             $table->integer('start')->default(0);
             $table->integer('access_free')->default(0);
-            $table->integer('languages_id')->unsigned()->nullable();
+            $table->string('language')->default('0');
             $table->integer('unsubscribed')->default(0);
-
-            $table->index('languages_id');
-
-            $table->foreign('languages_id')
-                ->references('id')->on('languages')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
         });
     }
 

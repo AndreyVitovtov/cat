@@ -141,6 +141,16 @@ Route::group(['middleware' => 'auth', 'prefix'=>'admin'], function() {
             Route::get('/paypal', "Admin\Payment@paypal")->name('admin-paypal');
             Route::post('/paypal/save', "Admin\Payment@paypalSave")->name('admin-paypal-save');
         });
+
+        Route::prefix('countries')->group(function () {
+            Route::get('/', "Admin\CountriesController@index")->name('countries');
+            Route::get('/add', "Admin\CountriesController@add")->name('countries-add');
+            Route::post('/add/save', "Admin\CountriesController@addSave")->name('countries-add-save');
+            Route::post('/delete', "Admin\CountriesController@delete")->name('countries-delete');
+            Route::post('/edit', "Admin\CountriesController@edit")->name('countries-edit');
+            Route::post('/edit/save', "Admin\CountriesController@editSave")->name('countries-edit-save');
+        });
+
     });
 
 Route::group(['middleware' => 'auth', 'prefix'=>'developer'], function() {

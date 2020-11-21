@@ -25,6 +25,60 @@
     @endcomponent
 @endaccess
 
+@access('countries')
+@component('menu.menu-rolled', [
+    'nameItem' => 'countries',
+    'icon' => 'icon-map-2',
+    'name' => 'countries',
+    'items' => [[
+           'name' => 'countries_list',
+           'menu' => 'countrieslist',
+           'url' => '/admin/countries'
+        ],[
+           'name' => 'countries_add',
+           'menu' => 'countriesadd',
+           'url' => '/admin/countries/add'
+        ]
+    ]])
+@endcomponent
+@endaccess
+
+@access('categories')
+@component('menu.menu-rolled', [
+    'nameItem' => 'categories',
+    'icon' => 'icon-archive',
+    'name' => 'categories',
+    'items' => [[
+           'name' => 'categories_list',
+           'menu' => 'categorieslist',
+           'url' => '/admin/categories'
+        ],[
+           'name' => 'categories_add',
+           'menu' => 'categoriesadd',
+           'url' => '/admin/categories/add'
+        ]
+    ]])
+@endcomponent
+@endaccess
+
+@access('channels')
+@component('menu.menu-rolled', [
+    'nameItem' => 'channels',
+    'icon' => 'icon-megaphone-1',
+    'name' => 'channels',
+    'items' => [[
+           'name' => 'channels_list',
+           'menu' => 'channelslist',
+           'url' => '/admin/channels'
+        ],[
+           'name' => 'channels_moderation',
+           'menu' => 'channelsmoderation',
+           'url' => '/admin/channels/moderation'
+        ]
+    ]])
+@endcomponent
+@endaccess
+
 @access('moderators')
     @component('menu.menu-rolled', [
         'nameItem' => 'moderators',

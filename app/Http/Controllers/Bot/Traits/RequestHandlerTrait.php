@@ -107,11 +107,13 @@ trait RequestHandlerTrait {
             }
         }
 
-        $this->select_country();
+//        $this->select_country();
 
 //        $this->send("{welcome}", [
 //            'buttons' => $this->buttons()->main_menu($this->getUserId())
 //        ]);
+
+        $this->selectLanguage();
     }
 
     public function languages() {
