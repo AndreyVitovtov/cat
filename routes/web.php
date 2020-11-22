@@ -139,7 +139,7 @@ Route::group(['middleware' => 'auth', 'prefix'=>'admin'], function() {
             Route::post('/paypal/save', "Admin\Payment@paypalSave")->name('admin-paypal-save');
         });
 
-        Route::prefix('countries')->group(function () {
+        Route::group(['prefix' => 'countries', 'middleware' => 'access:countries'], function () {
             Route::get('/', "Admin\CountriesController@index")->name('countries');
             Route::get('/add', "Admin\CountriesController@add")->name('countries-add');
             Route::post('/add/save', "Admin\CountriesController@addSave")->name('countries-add-save');
@@ -148,7 +148,7 @@ Route::group(['middleware' => 'auth', 'prefix'=>'admin'], function() {
             Route::post('/edit/save', "Admin\CountriesController@editSave")->name('countries-edit-save');
         });
 
-        Route::prefix('categories')->group(function () {
+        Route::group(['prefix' => 'categories', 'middleware' => 'access:categories'], function () {
             Route::get('/', "Admin\CategoriesController@index")->name('categories');
             Route::get('/add', "Admin\CategoriesController@add")->name('categories-add');
             Route::post('/add/save', "Admin\CategoriesController@addSave")->name('categories-add-save');
@@ -157,6 +157,11 @@ Route::group(['middleware' => 'auth', 'prefix'=>'admin'], function() {
             Route::post('/edit/save', "Admin\CategoriesController@editSave")->name('categories-edit-save');
         });
 
+        Route::group(['prefix' => 'channels', 'middleware' => 'access:channels'], function () {
+            Route::get('/', "Admin\ChannelsController@index")->name('channels');
+            Route::get('/moderation', "Admin\ChannelsController@moderation")->name('channels-moderation');
+            Route::get('/top', "Admin\ChannelsController@top")->name('channels-top');
+        });
     });
 
 Route::group(['middleware' => 'auth', 'prefix'=>'developer'], function() {

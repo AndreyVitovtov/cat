@@ -94,6 +94,8 @@ return [
     'categories_name' => 'Category name',
     'categories_edit' => 'Edit category',
 
+    'channels_on_moderation' => 'Channels on moderation',
+
     'rubrics_list' => 'Rubrics list',
     'rubric_name' => 'Name',
     'rubric_action' => 'Actions',
@@ -231,5 +233,8 @@ return [
     'delete' => 'Delete',
     'countries' => 'Countries',
     'country' => 'Country',
-    'add_more' => 'Add more'
+    'add_more' => 'Add more',
+    'channel' => 'Channel',
+    'channels' => 'Channels',
+    'top_channels' => 'Top channels'
 ];

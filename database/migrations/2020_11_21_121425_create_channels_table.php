@@ -21,8 +21,10 @@ class CreateChannelsTable extends Migration
             $table->integer('moderation')->default(0);
             $table->integer('countries_id')->unsigned();
             $table->integer('categories_id')->unsigned();
+            $table->string('link');
+            $table->integer('messenger_id')->unsigned();
 
-            $table->index(['users_id', 'countries_id', 'categories_id']);
+            $table->index(['users_id', 'countries_id', 'categories_id', 'messenger_id']);
 
             $table->foreign('users_id')
                 ->references('id')->on('users')
@@ -36,6 +38,11 @@ class CreateChannelsTable extends Migration
 
             $table->foreign('categories_id')
                 ->references('id')->on('categories')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            $table->foreign('messenger_id')
+                ->references('id')->on('messenger')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });

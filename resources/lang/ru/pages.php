@@ -94,6 +94,8 @@ return [
     'categories_name' => 'Название категории',
     'categories_edit' => 'Изменить категорию',
 
+    'channels_on_moderation' => 'Каналы на модерации',
+
     'rubrics_list' => 'Список рубрик',
     'rubric_name' => 'Название',
     'rubric_action' => 'Действия',
@@ -232,6 +234,9 @@ return [
     'delete' => 'Удалить',
     'countries' => 'Страны',
     'country' => 'Страна',
-    'add_more' => 'Добавить еще'
+    'add_more' => 'Добавить еще',
+    'channel' => 'Канал',
+    'channels' => 'Каналы',
+    'top_channels' => 'Топ каналов'
 
 ];

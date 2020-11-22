@@ -74,6 +74,10 @@
            'name' => 'channels_moderation',
            'menu' => 'channelsmoderation',
            'url' => '/admin/channels/moderation'
+        ], [
+           'name' => 'channels_top',
+           'menu' => 'channelstop',
+           'url' => '/admin/channels/top'
         ]
     ]])
 @endcomponent

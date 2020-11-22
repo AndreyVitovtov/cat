@@ -51,6 +51,7 @@ return [
     'channels' => 'Channels',
     'channels_list' => 'List',
     'channels_moderation' => 'On moderation',
+    'channels_top' => 'Top channels',
 
     'developer_admin_panel' => 'Admin panel',
     'developer_webhook' => 'Webhook',

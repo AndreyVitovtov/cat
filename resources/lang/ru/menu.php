@@ -51,6 +51,7 @@ return [
     'channels' => 'Каналы',
     'channels_list' => 'Список',
     'channels_moderation' => 'На модерации',
+    'channels_top' => 'Топ каналов',
 
     'developer_admin_panel' => 'Админка',
     'developer_webhook' => 'Webhook',

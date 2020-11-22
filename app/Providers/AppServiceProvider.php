@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Services\Contracts\AdminService;
 use App\Services\Contracts\AdService;
 use App\Services\Contracts\BotService;
+use App\Services\Contracts\ChannelService;
 use App\Services\Contracts\CityService;
 use App\Services\Contracts\ContactService;
 use App\Services\Contracts\CountryService;
@@ -20,6 +21,7 @@ use App\Services\Contracts\UserService;
 use App\Services\Implement\AdminServiceImpl;
 use App\Services\Implement\AdServiceImpl;
 use App\Services\Implement\BotServiceImpl;
+use App\Services\Implement\ChannelServiceImpl;
 use App\Services\Implement\CityServiceImpl;
 use App\Services\Implement\ContactServiceImpl;
 use App\Services\Implement\CountryServiceImpl;
@@ -48,25 +50,14 @@ class AppServiceProvider extends ServiceProvider
             return new AdminServiceImpl();
         });
 
-        $this->app->singleton(AdService::class, function() {
-            return new AdServiceImpl();
-        });
-
-        $this->app->singleton(CityService::class, function() {
-            return new CityServiceImpl();
-        });
-
-        $this->app->singleton(CountryService::class, function() {
-            return new CountryServiceImpl();
+        $this->app->singleton(ChannelService::class, function() {
+            return new ChannelServiceImpl();
         });
 
         $this->app->singleton(ContactService::class, function() {
             return new ContactServiceImpl();
         });
 
-        $this->app->singleton(CountryService::class, function() {
-            return new CountryServiceImpl();
-        });
 
         $this->app->singleton(InteractionService::class, function() {
             return new InteractionServiceImpl();
@@ -86,14 +77,6 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(RoleService::class, function() {
             return new RoleServiceImpl();
-        });
-
-        $this->app->singleton(RubricService::class, function() {
-            return new RubricServiceImpl();
-        });
-
-        $this->app->singleton(SubsectionService::class, function() {
-            return new SubsectionServiceImpl();
         });
 
         $this->app->singleton(UserService::class, function() {

@@ -24,4 +24,8 @@ class Channel extends Model {
     public function category() {
         return $this->belongsTo(Category::class, 'categories_id');
     }
+
+    public function messenger() {
+        return $this->belongsTo(Messenger::class, 'messenger_id');
+    }
 }
