@@ -162,6 +162,12 @@ Route::group(['middleware' => 'auth', 'prefix'=>'admin'], function() {
             Route::get('/moderation', "Admin\ChannelsController@moderation")->name('channels-moderation');
             Route::get('/top', "Admin\ChannelsController@top")->name('channels-top');
         });
+
+        Route::group(['prefix' => 'topList', 'middleware' => 'access:top_list'], function () {
+            Route::get('/top', "Admin\TopListController@top")->name('top-list-top');
+            Route::get('/country', "Admin\TopListController@countries")->name('top-list-country');
+            Route::get('/category', "Admin\TopListController@categories")->name('top-list-category');
+        });
     });
 
 Route::group(['middleware' => 'auth', 'prefix'=>'developer'], function() {

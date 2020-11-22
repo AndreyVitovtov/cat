@@ -83,6 +83,28 @@
 @endcomponent
 @endaccess
 
+@access('top_list')
+    @component('menu.menu-rolled', [
+        'nameItem' => 'top_list',
+        'icon' => 'icon-up-3',
+        'name' => 'top_list',
+        'items' => [[
+               'name' => 'channels_top_list_by_top',
+               'menu' => 'toplisttop',
+               'url' => '/admin/topList/top'
+            ], [
+               'name' => 'channels_top_list_by_country',
+               'menu' => 'toplistcountry',
+               'url' => '/admin/topList/country'
+            ], [
+               'name' => 'channels_top_list_by_categories',
+               'menu' => 'toplistcategory',
+               'url' => '/admin/topList/category'
+            ]
+        ]])
+    @endcomponent
+@endaccess
+
 @access('moderators')
     @component('menu.menu-rolled', [
         'nameItem' => 'moderators',

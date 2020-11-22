@@ -52,6 +52,10 @@ return [
     'channels_list' => 'List',
     'channels_moderation' => 'On moderation',
     'channels_top' => 'Top channels',
+    'channels_top_list_by_country' => 'By countries',
+    'channels_top_list_by_top' => 'Top channels',
+    'channels_top_list_by_categories' => 'By categories',
+    'top_list' => 'Top of the list',
 
     'developer_admin_panel' => 'Admin panel',
     'developer_webhook' => 'Webhook',

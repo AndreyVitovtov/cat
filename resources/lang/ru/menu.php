@@ -52,6 +52,10 @@ return [
     'channels_list' => 'Список',
     'channels_moderation' => 'На модерации',
     'channels_top' => 'Топ каналов',
+    'channels_top_list_by_country' => 'По странам',
+    'channels_top_list_by_top' => 'Топ каналов',
+    'channels_top_list_by_categories' => 'По категориям',
+    'top_list' => 'Верх списка',
 
     'developer_admin_panel' => 'Админка',
     'developer_webhook' => 'Webhook',
