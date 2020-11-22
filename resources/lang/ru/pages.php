@@ -76,15 +76,23 @@ return [
     'country_add_save' => 'Добавить',
     'country_edit_save' => 'Сохранить',
     'countries_add_more' => 'Добавить еще',
+    'countries_edit' => 'Изменить страну',
+    'countries_name' => 'Название страны',
 
     'cities_list' => 'Города',
     'cities_go' => 'Перейти',
     'cities_city' => 'Город',
     'cities_actions' => 'Действия',
     'countries_select_country' => 'Выберите страну',
-    'countries_name' => 'Город',
+    'city' => 'Город',
     'cities_add_save' => 'Добавить',
     'cities_edit_save' => 'Сохранить',
+
+    'categories' => 'Категории',
+    'category' => 'Категория',
+    'categories_add' => 'Добавить категорию',
+    'categories_name' => 'Название категории',
+    'categories_edit' => 'Изменить категорию',
 
     'rubrics_list' => 'Список рубрик',
     'rubric_name' => 'Название',
@@ -222,5 +230,8 @@ return [
     'actions' => 'Действия',
     'save' => 'Сохранить',
     'delete' => 'Удалить',
+    'countries' => 'Страны',
+    'country' => 'Страна',
+    'add_more' => 'Добавить еще'
 
 ];

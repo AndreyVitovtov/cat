@@ -29,9 +29,6 @@ Route::get('seed', "Seed@index")->name('seed');
 
 Route::get('lacale/{language}', "Admin\Locale@index")->name('locale');
 
-Route::get('request', "RequestJSON@index")->name('request');
-
-Route::get('request', "RequestJSON@index")->name('request');
 Route::post('bot/user/{id}', "Bot\Bot@index")->name('bot-webhook');
 
 Route::match(['get', 'post'], 'payment/qiwi/handler', "Payment@qiwiHandler");
@@ -151,6 +148,15 @@ Route::group(['middleware' => 'auth', 'prefix'=>'admin'], function() {
             Route::post('/edit/save', "Admin\CountriesController@editSave")->name('countries-edit-save');
         });
 
+        Route::prefix('categories')->group(function () {
+            Route::get('/', "Admin\CategoriesController@index")->name('categories');
+            Route::get('/add', "Admin\CategoriesController@add")->name('categories-add');
+            Route::post('/add/save', "Admin\CategoriesController@addSave")->name('categories-add-save');
+            Route::post('/delete', "Admin\CategoriesController@delete")->name('categories-delete');
+            Route::post('/edit', "Admin\CategoriesController@edit")->name('categories-edit');
+            Route::post('/edit/save', "Admin\CategoriesController@editSave")->name('categories-edit-save');
+        });
+
     });
 
 Route::group(['middleware' => 'auth', 'prefix'=>'developer'], function() {
@@ -203,6 +209,8 @@ Route::group(['middleware' => 'auth', 'prefix'=>'developer'], function() {
         });
 
         Route::get('/', "Developer\Settings@index");
+
+        Route::get('request', "Developer\RequestJSON@index")->name('request');
 });
 
 Auth::routes();

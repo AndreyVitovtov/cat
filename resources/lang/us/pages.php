@@ -76,15 +76,23 @@ return [
     'country_add_save' => 'Add',
     'country_edit_save' => 'Save',
     'countries_add_more' => 'Add more',
+    'countries_edit' => 'Edit country',
+    'countries_name' => 'Country name',
 
     'cities_list' => 'Countries list',
     'cities_go' => 'Go',
     'cities_city' => 'City',
     'cities_actions' => 'Actions',
     'countries_select_country' => 'Select country',
-    'countries_name' => 'City',
+    'cities_name' => 'City',
     'cities_add_save' => 'Add',
     'cities_edit_save' => 'Save',
+
+    'categories' => 'Categories',
+    'category' => 'Category',
+    'categories_add' => 'Add category',
+    'categories_name' => 'Category name',
+    'categories_edit' => 'Edit category',
 
     'rubrics_list' => 'Rubrics list',
     'rubric_name' => 'Name',
@@ -221,4 +229,7 @@ return [
     'actions' => 'Actions',
     'save' => 'Save',
     'delete' => 'Delete',
+    'countries' => 'Countries',
+    'country' => 'Country',
+    'add_more' => 'Add more'
 ];

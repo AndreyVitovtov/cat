@@ -1,12 +1,14 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Request</title>
-    <script src="{{asset('js/jquery-3.4.1.min.js')}}"></script>
+@extends("developer.template")
+
+@section("title")
+    Request | Разработка
+@endsection
+
+@section("h3")
+    <h3>Request</h3>
+@endsection
+
+@section("main")
 
     <style>
         body {
@@ -111,5 +113,4 @@
         document.execCommand("copy");
     }
 </script>
-</body>
-</html>
+@endsection

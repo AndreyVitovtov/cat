@@ -15,8 +15,8 @@
         <input type="hidden" name="id" value="{{ $country->id }}">
         @csrf
         <div>
-            <label for="name">@lang('pages.countries-name')</label>
-            <input type="text" name="name" id="name" value="{{ $country->name }}">
+            <label for="name">@lang('pages.countries_name')</label>
+            <input type="text" name="name" id="name" value="{{ $country->name }}" autofocus>
         </div>
         <br>
         <div>
