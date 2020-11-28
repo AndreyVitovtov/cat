@@ -23,19 +23,37 @@
                         <td>@lang('pages.actions')</td>
                     </tr>
                     @foreach($channels as $channel)
+                        <form action="{{ route('channels-activate') }}" method="POST" id="form-activate-{{ $channel->id }}">
+                            @csrf
+                            <input type="hidden" name="id" value="{{ $channel->id }}">
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>
-                                {{ $channel->name }}
+                                <a href="{{ $channel->link }}" target="_blank" class="link">{{ $channel->link }}</a>
                             </td>
                             <td>
-                                {{ $channel->country->name }}
+                                <select name="country" id="country_{{ $channel->id }}">
+                                    @foreach($countries as $country)
+                                        <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                    @endforeach
+                                </select>
                             </td>
                             <td>
-                                {{ $channel->category->name }}
+                                <select name="category" id="category_{{ $channel->id }}">
+                                    @foreach($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @endforeach
+                                </select>
                             </td>
+                        </form>
                             <td class="actions">
                                 <div>
+                                    <form>
+                                        <button form="form-activate-{{ $channel->id }}">
+                                            <i class='icon-play-1'></i>
+                                        </button>
+                                    </form>
+
                                     <form action="{{ route('channels-edit') }}" method="POST" id="form-edit-{{ $channel->id }}">
                                         @csrf
                                         <input type="hidden" name="id" value="{{ $channel->id }}">

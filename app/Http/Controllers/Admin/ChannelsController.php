@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\models\Category;
+use App\models\ChannelOfModeration;
+use App\models\Country;
+use App\models\ParserTelegram;
 use App\models\Top;
 use App\Services\Contracts\ChannelService;
 use Illuminate\Http\Request;
@@ -26,9 +30,18 @@ class ChannelsController extends Controller {
 
     public function moderation() {
         return view('admin.channels.moderation', [
-            'channels' => $this->channelService->getOnModeration(),
+            'channels' => ChannelOfModeration::paginate(25),
+            'countries' => Country::all(),
+            'categories' => Category::all(),
             'menuItem' => 'channelsmoderation'
         ]);
+    }
+
+    public function activate(Request $request) {
+        $data = $request->post();
+        $channel = ChannelOfModeration::find($request->post('id'));
+        $parser = new ParserTelegram($channel->link);
+        return "<img src='".$parser->getAvatar()."'><h1>".$parser->getName()."</h1>";
     }
 
     public function top() {

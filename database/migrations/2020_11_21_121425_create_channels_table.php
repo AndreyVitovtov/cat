@@ -18,7 +18,6 @@ class CreateChannelsTable extends Migration
             $table->string('name');
             $table->string('avatar')->nullable();
             $table->integer('users_id')->unsigned();
-            $table->integer('moderation')->default(0);
             $table->integer('countries_id')->unsigned();
             $table->integer('categories_id')->unsigned();
             $table->string('link');

@@ -12,7 +12,6 @@ class Channel extends Model {
         'name',
         'avatar',
         'users_id',
-        'moderation',
         'countries_id',
         'categories_id'
     ];

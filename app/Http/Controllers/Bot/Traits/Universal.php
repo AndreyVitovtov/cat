@@ -183,6 +183,7 @@ trait Universal {
                 'channel_post' => 'channel_post',
                 'location' => 'location',
                 'contact' => 'contact',
+                'url' => 'url',
                 'text' => 'text',
                 'document' => 'document',
                 'photo' => 'photo',
