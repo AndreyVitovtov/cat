@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\models\API\Payment\QIWI;
-use App\models\PaymentData;
-use Illuminate\Http\Request;
+use App\models\ParserTelegram;
+use App\models\ParserViber;
 
 class Test extends Controller {
     public function index() {
-        $paymentData = PaymentData::first();
-        $qiwi = new QIWI($paymentData->qiwi_token, $paymentData->qiwi_webhook_id, $paymentData->qiwi_public_key);
-        return json_decode($qiwi->getKey())->key;
+        $parser = new ParserViber('https://invite.viber.com/?g2=AQABm0lluH6iC0qUcSvMoPTt6s08Oqkq8%2Fsfz33JIuf9bshZn2xiSH20MzTViMF0');
+        return "<img src='".$parser->getAvatar()."'><br>".$parser->getName();
+
     }
 }

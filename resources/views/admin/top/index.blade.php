@@ -17,7 +17,7 @@
                 <table>
                     <tr>
                         <td>№</td>
-                        <td>@lang('pages.channel_name')</td>
+                        <td>@lang('pages.channel')</td>
                         <td>@lang('pages.actions')</td>
                     </tr>
                     @foreach($tops as $tc)
