@@ -238,6 +238,8 @@ return [
     'channel' => 'Канал',
     'channels' => 'Каналы',
     'top_channels' => 'Топ каналов',
-    'add_to_top' => 'Добавить в Топ'
+    'add_to_top' => 'Добавить в Топ',
+    'top' => 'Верх',
+    'top_of_the_list_of_top_channels' => 'Верх списка топ каналов'
 
 ];

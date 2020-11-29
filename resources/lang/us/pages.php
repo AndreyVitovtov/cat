@@ -237,5 +237,7 @@ return [
     'channel' => 'Channel',
     'channels' => 'Channels',
     'top_channels' => 'Top channels',
-    'add_to_top' => 'Add to Top'
+    'add_to_top' => 'Add to Top',
+    'top' => 'Top',
+    'top_of_the_list_of_top_channels' => 'Top of the list of top channels'
 ];

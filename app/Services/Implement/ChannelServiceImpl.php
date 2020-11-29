@@ -6,9 +6,12 @@ namespace App\Services\Implement;
 
 use App\models\Channel;
 use App\models\ChannelOfModeration;
+use App\models\ChannelsHasTop;
 use App\models\ParserTelegram;
 use App\models\ParserViber;
+use App\models\Top;
 use App\Services\Contracts\ChannelService;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
@@ -114,5 +117,18 @@ class ChannelServiceImpl implements ChannelService {
         else {
             return null;
         }
+    }
+
+    function getTop(): Collection {
+        $top = [];
+        $tops = ChannelsHasTop::all('top_id');
+        foreach($tops as $t) {
+            $top[] = $t->top_id;
+        }
+
+        $topList = Top::with('channel')->whereIn('id', $top)->get();
+        $other = Top::with('channel')->whereNotIn('id', $top)->get();
+
+        return $topList->merge($other);
     }
 }

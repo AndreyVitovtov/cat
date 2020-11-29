@@ -4,6 +4,8 @@
 namespace App\Services\Contracts;
 
 
+use Illuminate\Database\Eloquent\Collection;
+
 interface ChannelService
 {
     function add(array $channel): int;
@@ -12,4 +14,5 @@ interface ChannelService
     function delete(int $id): void;
     function activate(int $id, int $countriesId, int $categoriesIdv): ? bool;
     function saveImage(string $path): ? string;
+    function getTop(): Collection;
 }
