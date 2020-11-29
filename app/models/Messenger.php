@@ -15,4 +15,8 @@ class Messenger extends Model {
     public function channels() {
         return $this->hasMany(Channel::class, 'messenger_id');
     }
+
+    public function channelsOfModeration() {
+        return $this->hasMany(ChannelOfModeration::class, 'messenger_id');
+    }
 }

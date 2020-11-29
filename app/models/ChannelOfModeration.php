@@ -10,8 +10,13 @@ class ChannelOfModeration extends Model {
     public $fillable = [
         'id',
         'users_id',
+        'messenger_id',
         'link',
         'date',
         'time'
     ];
+
+    public function messenger() {
+        return $this->belongsTo(Messenger::class, 'messenger_id');
+    }
 }

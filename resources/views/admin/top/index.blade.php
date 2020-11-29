@@ -24,11 +24,11 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>
-                                {{ $tc->channel->name }}
+                                <a href="{{ $tc->channel->link }}" class="link">{{ $tc->channel->name }}</a>
                             </td>
                             <td class="actions">
                                 <div>
-                                    <form action="{{ route('top-delete') }}" method="POST" id="form-delete-{{ $tc->id }}">
+                                    <form action="{{ route('channels-top-delete') }}" method="POST" id="form-delete-{{ $tc->id }}">
                                         @csrf
                                         <input type="hidden" name="id" value="{{ $tc->id }}">
                                         <button form="form-delete-{{ $tc->id }}">

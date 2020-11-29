@@ -16,6 +16,7 @@
             <div class="overflow-X-auto">
                 <table>
                     <tr>
+                        <td><input type="checkbox" name="check_all" id="check_all"></td>
                         <td>№</td>
                         <td>@lang('pages.channel')</td>
                         <td>@lang('pages.country')</td>
@@ -24,9 +25,10 @@
                     </tr>
                     @foreach($channels as $channel)
                         <tr>
+                            <td><input form="add_to_top" type="checkbox" name="channels[]" value="{{ $channel->id }}" class="checkbox"></td>
                             <td>{{ $loop->iteration }}</td>
                             <td>
-                                {{ $channel->name }}
+                                <a href="{{ $channel->link }}" class="link" target="_blank">{{ $channel->name }}</a>
                             </td>
                             <td>
                                 {{ $channel->country->name }}
@@ -58,6 +60,13 @@
                 </table>
             </div>
             {{ $channels->links() }}
+        </div>
+        <br>
+        <div>
+            <form action="{{ route('channels-add-top') }}" method="POST" id="add_to_top">
+                @csrf
+            </form>
+            <button form="add_to_top" class="button">@lang('pages.add_to_top')</button>
         </div>
     </div>
 @endsection

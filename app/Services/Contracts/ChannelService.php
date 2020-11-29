@@ -10,4 +10,6 @@ interface ChannelService
     function checkPresence(string $link): bool;
     function edit(int $id, array $dataChannel): void;
     function delete(int $id): void;
+    function activate(int $id, int $countriesId, int $categoriesIdv): ? bool;
+    function saveImage(string $path): ? string;
 }

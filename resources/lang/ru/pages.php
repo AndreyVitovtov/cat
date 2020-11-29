@@ -237,6 +237,7 @@ return [
     'add_more' => 'Добавить еще',
     'channel' => 'Канал',
     'channels' => 'Каналы',
-    'top_channels' => 'Топ каналов'
+    'top_channels' => 'Топ каналов',
+    'add_to_top' => 'Добавить в Топ'
 
 ];

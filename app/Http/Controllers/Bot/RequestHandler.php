@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Bot;
 use App\Http\Controllers\Bot\Traits\RequestHandlerTrait;
 use App\models\BotUsers;
 use App\models\buttons\InlineButtons;
+use App\models\Channel;
 use App\models\ChannelOfModeration;
+use App\models\Messenger;
 use App\models\ParserTelegram;
 use Exception;
 
@@ -47,13 +49,25 @@ class RequestHandler extends BaseRequestHandler {
     }
 
     public function add_channel_send_link() {
+        $link = $this->getMessage();
+        if(ChannelOfModeration::where('link', $link)->exists() || Channel::where('link', $link)->exists()) {
+            $this->send('{channel_has_already_added_to_the_catalog}', [
+                'buttons' => $this->buttons()->back()
+            ]);
+            return;
+        }
+
         if(MESSENGER == "Telegram") {
-            $parser = new ParserTelegram($this->getMessage());
+            $parser = new ParserTelegram($link);
             if($parser->checkLink()) {
                 try {
                     $channel = new ChannelOfModeration();
-                    $channel->link = $this->getMessage();
+                    $channel->link = $link;
                     $channel->users_id = $this->getUserId();
+
+                    $messenger = Messenger::where('name', MESSENGER)->first();
+
+                    $channel->messenger_id = $messenger->id;
                     $channel->date = date('Y-m-d');
                     $channel->time = date('H:i:s');
                     $channel->save();

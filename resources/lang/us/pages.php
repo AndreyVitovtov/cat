@@ -236,5 +236,6 @@ return [
     'add_more' => 'Add more',
     'channel' => 'Channel',
     'channels' => 'Channels',
-    'top_channels' => 'Top channels'
+    'top_channels' => 'Top channels',
+    'add_to_top' => 'Add to Top'
 ];

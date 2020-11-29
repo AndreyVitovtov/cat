@@ -162,8 +162,12 @@ Route::group(['middleware' => 'auth', 'prefix'=>'admin'], function() {
             Route::get('/moderation', "Admin\ChannelsController@moderation")->name('channels-moderation');
             Route::get('/top', "Admin\ChannelsController@top")->name('channels-top');
             Route::post('/edit', "Admin\ChannelsController@edit")->name('channels-edit');
+            Route::post('/edit/save', "Admin\ChannelsController@editSave")->name('channels-edit-save');
             Route::post('/delete', "Admin\ChannelsController@delete")->name('channels-delete');
             Route::post('/activate', "Admin\ChannelsController@activate")->name('channels-activate');
+            Route::post('/moderation/delete', "Admin\ChannelsController@moderationDelete")->name('channels-moderation-delete');
+            Route::post('/top/add', "Admin\ChannelsController@addTop")->name('channels-add-top');
+            Route::post('/top/delete', "Admin\ChannelsController@topDelete")->name('channels-top-delete');
         });
 
         Route::group(['prefix' => 'topList', 'middleware' => 'access:top_list'], function () {

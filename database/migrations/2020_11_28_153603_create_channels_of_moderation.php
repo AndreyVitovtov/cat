@@ -16,14 +16,20 @@ class CreateChannelsOfModeration extends Migration
         Schema::create('channels_of_moderation', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('users_id')->unsigned();
+            $table->integer('messenger_id')->unsigned();
             $table->string('link');
             $table->date('date');
             $table->time('time');
 
-            $table->index('users_id');
+            $table->index(['users_id', 'messenger_id']);
 
             $table->foreign('users_id')
                 ->references('id')->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            $table->foreign('messenger_id')
+                ->references('id')->on('messenger')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });

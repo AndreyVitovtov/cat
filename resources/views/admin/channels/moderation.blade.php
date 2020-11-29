@@ -54,15 +54,15 @@
                                         </button>
                                     </form>
 
-                                    <form action="{{ route('channels-edit') }}" method="POST" id="form-edit-{{ $channel->id }}">
-                                        @csrf
-                                        <input type="hidden" name="id" value="{{ $channel->id }}">
-                                        <button form="form-edit-{{ $channel->id }}">
-                                            <i class='icon-pen'></i>
-                                        </button>
-                                    </form>
+{{--                                    <form action="{{ route('channels-edit') }}" method="POST" id="form-edit-{{ $channel->id }}">--}}
+{{--                                        @csrf--}}
+{{--                                        <input type="hidden" name="id" value="{{ $channel->id }}">--}}
+{{--                                        <button form="form-edit-{{ $channel->id }}">--}}
+{{--                                            <i class='icon-pen'></i>--}}
+{{--                                        </button>--}}
+{{--                                    </form>--}}
 
-                                    <form action="{{ route('channels-delete') }}" method="POST" id="form-delete-{{ $channel->id }}">
+                                    <form action="{{ route('channels-moderation-delete') }}" method="POST" id="form-delete-{{ $channel->id }}">
                                         @csrf
                                         <input type="hidden" name="id" value="{{ $channel->id }}">
                                         <button form="form-delete-{{ $channel->id }}">
