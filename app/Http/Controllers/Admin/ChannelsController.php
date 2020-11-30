@@ -92,7 +92,9 @@ class ChannelsController extends Controller {
     }
 
     public function addTop(Request $request) {
-        foreach($request->post('channels') as $channel) {
+        $channels = $request->post('channels');
+        if(! is_array($channels)) return redirect()->to(route('channels'));
+        foreach($channels as $channel) {
             if(Top::where('channels_id', $channel)->exists()) continue;
             $top = new Top();
             $top->channels_id = $channel;

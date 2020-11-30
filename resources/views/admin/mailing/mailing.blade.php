@@ -44,6 +44,20 @@
                 <input type="radio" name="messenger" value="Telegram" id="telegram">
                 <label for="telegram">Telegram</label>
             </div>
+            <br>
+            <div>
+                <label>@lang('pages.added_channel')</label>
+            </div>
+            <div>
+                <input type="radio" name="added_channel" value="all" id="all_added_channel" checked>
+                <label for="all_added_channel">@lang('pages.added_channel_all')</label>
+
+                <input type="radio" name="added_channel" value="yes" id="yes_added_channel">
+                <label for="yes_added_channel">@lang('pages.added_channel_yes')</label>
+
+                <input type="radio" name="added_channel" value="no" id="no_added_channel">
+                <label for="no_added_channel">@lang('pages.added_channel_no')</label>
+            </div>
 
             <div class="block_buttons">
                 <button class="button">@lang('pages.mailing_send')</button>

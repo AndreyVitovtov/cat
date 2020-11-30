@@ -45,7 +45,7 @@ class Mailing extends Controller{
     public function send(Request $request) {
         $params = $request->input();
         if(empty($params['text'])) {
-            return redirect()->to("/admin/mailing/users");
+            return redirect()->to("/admin/mailing");
         }
         else {
             $task = [];
@@ -69,39 +69,66 @@ class Mailing extends Controller{
 
             $count = 0;
 
-//            if($params['chat_holders'] == "all") {
-//                $db = DB::select("
-//                    SELECT COUNT(*) AS count
-//                        FROM users
-//                        WHERE messenger LIKE '".$params['messenger']."'
-//                            AND country LIKE '".$params['country']."'"
-//                );
-//            }
-//            elseif($params['chat_holders'] == "yes") {
-//                $db = DB::select("
-//                    SELECT COUNT(DISTINCT(u.id)) AS count
-//                        FROM users u
-//                        JOIN chats c ON c.users_id = u.id
-//                        WHERE u.messenger LIKE '".$params['messenger']."'
-//                            AND u.country LIKE '".$params['country']."'"
-//                );
-//            }
-//            elseif($params['chat_holders'] == "no") {
-//                $db = DB::select("
-//                    SELECT COUNT(DISTINCT(u.id)) AS count
-//                    FROM users u
-//                    WHERE u.id NOT IN (
-//                        SELECT id FROM chats
-//                    ) AND u.messenger LIKE '".$params['messenger']."'
-//                      AND u.country LIKE '".$params['country']."'"
-//                );
-//
-//            }
+            if($params['added_channel'] == "all") {
+                if($params['country'] == '%') {
+                    $db = DB::select("
+                    SELECT COUNT(DISTINCT(u.id)) AS count
+                        FROM users u
+                        WHERE u.messenger LIKE '".$params['messenger']."'"
+                    );
+                }
+                else {
+                    $db = DB::select("
+                    SELECT COUNT(DISTINCT(u.id)) AS count
+                        FROM users u
+                        WHERE u.messenger LIKE '".$params['messenger']."'
+                            AND u.country LIKE '".$params['country']."'"
+                    );
+                }
+            }
+            elseif($params['added_channel'] == "yes") {
+                if($params['country'] == '%') {
+                    $db = DB::select("
+                    SELECT COUNT(DISTINCT(u.id)) AS count
+                        FROM users u
+                        WHERE u.messenger LIKE '".$params['messenger']."'
+                            AND u.id IN(SELECT DISTINCT(users_id) FROM channels)"
+                    );
+                }
+                else {
+                    $db = DB::select("
+                    SELECT COUNT(DISTINCT(u.id)) AS count
+                        FROM users u
+                        WHERE u.messenger LIKE '".$params['messenger']."'
+                            AND u.country LIKE '".$params['country']."'
+                            AND u.id IN(SELECT DISTINCT(users_id) FROM channels)"
+                    );
+                }
+            }
+            elseif($params['added_channel'] == "no") {
+                if($params['country'] == '%') {
+                    $db = DB::select("
+                    SELECT COUNT(DISTINCT(u.id)) AS count
+                        FROM users u
+                        WHERE u.messenger LIKE '".$params['messenger']."'
+                            AND u.id NOT IN(SELECT DISTINCT(users_id) FROM channels)"
+                    );
+                }
+                else {
+                    $db = DB::select("
+                    SELECT COUNT(DISTINCT(u.id)) AS count
+                        FROM users u
+                        WHERE u.messenger LIKE '".$params['messenger']."'
+                            AND u.country LIKE '".$params['country']."'
+                            AND u.id NOT IN(SELECT DISTINCT(users_id) FROM channels)"
+                    );
+                }
+            }
 
-//            $count = $db[0]->count;
+            $count = $db[0]->count;
 
             if($count == 0) {
-                return redirect()->to("/admin/mailing/users");
+                return redirect()->to("/admin/mailing");
             }
 
             $task['count'] = $count;
@@ -110,18 +137,18 @@ class Mailing extends Controller{
             $task['performed'] = "false";
             $task['country'] = $params['country'];
             $task['messenger'] = $params['messenger'];
-            $task['chat_holders'] = $params['chat_holders'];
+            $task['added_channel'] = $params['added_channel'];
 
             file_put_contents(public_path()."/json/mailing_task.json", json_encode($task));
             file_put_contents(public_path()."/txt/log.txt", "");
 
-            return redirect()->to("/admin/mailing/users");
+            return redirect()->to("/admin/mailing");
         }
     }
 
     public function cancel() {
         unlink(public_path()."/json/mailing_task.json");
-        return redirect()->to("/admin/mailing/users");
+        return redirect()->to("/admin/mailing");
     }
 
     public function analize() {

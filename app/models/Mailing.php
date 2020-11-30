@@ -33,38 +33,72 @@ class Mailing {
             'message' => 'Mailing performed'
         ]);
 
-        if($task->chat_holders == "all") {
-            $users = DB::select("
-                    SELECT id, chat, messenger 
-                    FROM users 
-                    WHERE messenger LIKE '".$task->messenger."' 
-                    AND country LIKE '".$task->country."'
-                    LIMIT ".$this->countUsers."
-                    OFFSET ".$task->start
-            );
-        }
-        elseif($task->chat_holders == "yes") {
-            $users = DB::select("
+        if($task->added_channel == "all") {
+            if($task->country == '%') {
+                $users = DB::select("
                     SELECT id, chat, messenger
-                        FROM users u
-                        JOIN chats c ON c.users_id = u.id
-                        WHERE u.messenger LIKE '".$task->messenger."'
-                        AND u.country LIKE '".$task->country."'
-                        LIMIT ".$this->countUsers."
-                        OFFSET ".$task->start
-            );
+                        FROM users
+                        WHERE messenger LIKE '{$task->messenger}'
+                        LIMIT {$this->countUsers}
+                        OFFSET {$task->start}
+                ");
+            }
+            else {
+                $users = DB::select("
+                    SELECT id, chat, messenger
+                        FROM users
+                        WHERE messenger LIKE '{$task->messenger}'
+                            AND country LIKE '{$task->country}'
+                            LIMIT {$this->countUsers}
+                            OFFSET {$task->start}
+                ");
+            }
         }
-        elseif($task->chat_holders == "no") {
-            $users = DB::select("
-                    SELECT id, chat, messenger 
-                    FROM users u
-                    WHERE u.id NOT IN (
-                        SELECT id FROM chats
-                    ) AND u.messenger LIKE '".$task->messenger."'
-                      AND u.country LIKE '".$task->country."'
-                    LIMIT ".$this->countUsers."
-                    OFFSET ".$task->start
-            );
+        elseif($task->added_channel == "yes") {
+            if($task->country == '%') {
+                $users = DB::select("
+                    SELECT id, chat, messenger
+                        FROM users
+                        WHERE messenger LIKE '{$task->messenger}'
+                        AND id IN(SELECT DISTINCT(users_id) FROM channels)
+                        LIMIT {$this->countUsers}
+                        OFFSET {$task->start}
+                ");
+            }
+            else {
+                $users = DB::select("
+                    SELECT id, chat, messenger
+                        FROM users
+                        WHERE messenger LIKE '{$task->messenger}'
+                        AND country LIKE '{$task->country}'
+                        AND id IN(SELECT DISTINCT(users_id) FROM channels)
+                        LIMIT {$this->countUsers}
+                        OFFSET {$task->start}
+                ");
+            }
+        }
+        elseif($task->added_channel == "no") {
+            if($task->country == '%') {
+                $users = DB::select("
+                    SELECT id, chat, messenger
+                        FROM users
+                        WHERE messenger LIKE '{$task->messenger}'
+                        AND id NOT IN(SELECT DISTINCT(users_id) FROM channels)
+                        LIMIT {$this->countUsers}
+                        OFFSET {$task->start}
+                ");
+            }
+            else {
+                $users = DB::select("
+                    SELECT id, chat, messenger
+                        FROM users
+                        WHERE messenger LIKE '{$task->messenger}'
+                        AND country LIKE '{$task->country}'
+                        AND id NOT IN(SELECT DISTINCT(users_id) FROM channels)
+                        LIMIT {$this->countUsers}
+                        OFFSET {$task->start}
+                ");
+            }
         }
 
         $task->performed = "true";

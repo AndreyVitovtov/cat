@@ -245,4 +245,8 @@ return [
     'go' => 'Go',
     'top_of_the_list_are_channels_by_category' => 'Top of the list are channels by category',
     'select_category' => 'Select category',
+    'added_channel_all' => 'All',
+    'added_channel_yes' => 'Yes',
+    'added_channel_no' => 'No',
+    'added_channel' => 'Added channel:'
 ];

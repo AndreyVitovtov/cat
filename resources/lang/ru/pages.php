@@ -246,5 +246,9 @@ return [
     'go' => 'Перейти',
     'top_of_the_list_are_channels_by_category' => 'Верх списка каналов по категориям',
     'select_category' => 'Выберите категорию',
+    'added_channel_all' => 'Все',
+    'added_channel_yes' => 'Да',
+    'added_channel_no' => 'Нет',
+    'added_channel' => 'Добавил канал:'
 
 ];
