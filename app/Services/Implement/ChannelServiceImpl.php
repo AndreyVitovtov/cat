@@ -4,9 +4,11 @@
 namespace App\Services\Implement;
 
 
+use App\models\Category;
 use App\models\Channel;
 use App\models\ChannelOfModeration;
 use App\models\ChannelsHasTop;
+use App\models\Country;
 use App\models\ParserTelegram;
 use App\models\ParserViber;
 use App\models\Top;
@@ -128,6 +130,34 @@ class ChannelServiceImpl implements ChannelService {
 
         $topList = Top::with('channel')->whereIn('id', $top)->get();
         $other = Top::with('channel')->whereNotIn('id', $top)->get();
+
+        return $topList->merge($other);
+    }
+
+    function getByCountry(int $countryId): Collection {
+        $top = [];
+        $tops = Country::with('topChannels')->where('id', $countryId)->first();
+
+        foreach($tops->topChannels as $t) {
+            $top[] = $t->id;
+        }
+
+        $topList = Channel::where('countries_id', $countryId)->whereIn('id', $top)->get();
+        $other = Channel::where('countries_id', $countryId)->whereNotIn('id', $top)->get();
+
+        return $topList->merge($other);
+    }
+
+    function getByCategory(int $categoryId): Collection {
+        $top = [];
+        $tops = Category::with('topChannels')->where('id', $categoryId)->first();
+
+        foreach($tops->topChannels as $t) {
+            $top[] = $t->id;
+        }
+
+        $topList = Channel::where('categories_id', $categoryId)->whereIn('id', $top)->get();
+        $other = Channel::where('categories_id', $categoryId)->whereNotIn('id', $top)->get();
 
         return $topList->merge($other);
     }

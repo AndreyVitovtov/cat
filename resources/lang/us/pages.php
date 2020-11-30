@@ -239,5 +239,10 @@ return [
     'top_channels' => 'Top channels',
     'add_to_top' => 'Add to Top',
     'top' => 'Top',
-    'top_of_the_list_of_top_channels' => 'Top of the list of top channels'
+    'top_of_the_list_of_top_channels' => 'Top of the list of top channels',
+    'top_of_the_list_are_channels_by_country' => 'Top of the list are channels by country',
+    'select_country' => 'Select country',
+    'go' => 'Go',
+    'top_of_the_list_are_channels_by_category' => 'Top of the list are channels by category',
+    'select_category' => 'Select category',
 ];

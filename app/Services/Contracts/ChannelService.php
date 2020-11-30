@@ -15,4 +15,6 @@ interface ChannelService
     function activate(int $id, int $countriesId, int $categoriesIdv): ? bool;
     function saveImage(string $path): ? string;
     function getTop(): Collection;
+    function getByCountry(int $countryId): Collection;
+    function getByCategory(int $categoryId): Collection;
 }

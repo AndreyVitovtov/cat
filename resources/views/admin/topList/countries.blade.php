@@ -1,11 +1,11 @@
 @extends("admin.template")
 
 @section("title")
-    @lang('pages.top_of_the_list_categories')
+    @lang('pages.top_of_the_list_are_channels_by_country')
 @endsection
 
 @section("h3")
-    <h3>@lang('pages.top_of_the_list_categories')</h3>
+    <h3>@lang('pages.top_of_the_list_are_channels_by_country')</h3>
 @endsection
 
 @section("main")
@@ -16,32 +16,35 @@
             <div class="overflow-X-auto">
                 <table>
                     <tr>
+                        <td>@lang('pages.top')</td>
                         <td>№</td>
-                        <td>@lang('pages.channel_name')</td>
-                        <td>@lang('pages.actions')</td>
+                        <td>@lang('pages.channel')</td>
                     </tr>
-                    {{--                    @foreach($tops as $tc)--}}
-                    {{--                        <tr>--}}
-                    {{--                            <td>{{ $loop->iteration }}</td>--}}
-                    {{--                            <td>--}}
-                    {{--                                {{ $tc->channel->name }}--}}
-                    {{--                            </td>--}}
-                    {{--                            <td class="actions">--}}
-                    {{--                                <div>--}}
-                    {{--                                    <form action="{{ route('top-delete') }}" method="POST" id="form-delete-{{ $tc->id }}">--}}
-                    {{--                                        @csrf--}}
-                    {{--                                        <input type="hidden" name="id" value="{{ $tc->id }}">--}}
-                    {{--                                        <button form="form-delete-{{ $tc->id }}">--}}
-                    {{--                                            <i class='icon-trash-empty'></i>--}}
-                    {{--                                        </button>--}}
-                    {{--                                    </form>--}}
-                    {{--                                </div>--}}
-                    {{--                            </td>--}}
-                    {{--                        </tr>--}}
-                    {{--                    @endforeach--}}
+                    @foreach($channels as $channel)
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="channel[]" form="top-form" value="{{ $channel->id }}"
+                                       @if(in_array($channel->id, $top))
+                                       checked
+                                    @endif
+                                >
+                            </td>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>
+                                <a href="{{ $channel->link }}" class="link" target="_blank">{{ $channel->name }}</a>
+                            </td>
+                        </tr>
+                    @endforeach
                 </table>
             </div>
-            {{--            {{ $tops->links() }}--}}
+        </div>
+        <br>
+        <div>
+            <form action="{{ route('top-list-country-save') }}" method="POST" id="top-form">
+                @csrf
+                <input type="hidden" name="country" value="{{ $country }}">
+                <input type="submit" value="@lang('pages.save')" class="button">
+            </form>
         </div>
     </div>
 @endsection

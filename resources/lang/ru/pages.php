@@ -240,6 +240,11 @@ return [
     'top_channels' => 'Топ каналов',
     'add_to_top' => 'Добавить в Топ',
     'top' => 'Верх',
-    'top_of_the_list_of_top_channels' => 'Верх списка топ каналов'
+    'top_of_the_list_of_top_channels' => 'Верх списка топ каналов',
+    'top_of_the_list_are_channels_by_country' => 'Верх списка каналов по странам',
+    'select_country' => 'Выберите страну',
+    'go' => 'Перейти',
+    'top_of_the_list_are_channels_by_category' => 'Верх списка каналов по категориям',
+    'select_category' => 'Выберите категорию',
 
 ];

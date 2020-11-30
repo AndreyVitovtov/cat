@@ -27,4 +27,13 @@ class Channel extends Model {
     public function messenger() {
         return $this->belongsTo(Messenger::class, 'messenger_id');
     }
+
+    public function topCountry() {
+        return $this->belongsToMany(
+            Country::class,
+            'channels_top_countries',
+            'channels_id',
+            'countries_id'
+        );
+    }
 }

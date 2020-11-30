@@ -175,6 +175,10 @@ Route::group(['middleware' => 'auth', 'prefix'=>'admin'], function() {
             Route::get('/country', "Admin\TopListController@countries")->name('top-list-country');
             Route::get('/category', "Admin\TopListController@categories")->name('top-list-category');
             Route::post('/top/save', "Admin\TopListController@topSave")->name('top-list-top-save');
+            Route::get('/top/country', "Admin\TopListController@topCountry")->name('top-list-country');
+            Route::post('/top/country/save', "Admin\TopListController@topCountrySave")->name('top-list-country-save');
+            Route::get('/top/category', "Admin\TopListController@topCategory")->name('top-list-category');
+            Route::post('/top/category/save', "Admin\TopListController@topCategorySave")->name('top-list-category-save');
         });
     });
 

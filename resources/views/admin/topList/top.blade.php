@@ -31,7 +31,7 @@
                             </td>
                             <td>{{ $loop->iteration }}</td>
                             <td>
-                                <a href="{{ $channel->channel->link }}" class="link">{{ $channel->channel->name }}</a>
+                                <a href="{{ $channel->channel->link }}" class="link" target="_blank">{{ $channel->channel->name }}</a>
                             </td>
                         </tr>
                     @endforeach
