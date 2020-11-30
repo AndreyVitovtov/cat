@@ -100,16 +100,14 @@ class ButtonsViber {
         ];
     }
 
-    public function main_menu($userId) {
+    public function main_menu($userId = null) {
 //        $user = BotUsers::find($userId);
 
 //        if($user->access == '1') {
            return [
-               $this->button(3, 1, 'search_ads', '{search_ads}'),
-               $this->button(3, 1, 'create_ad', '{create_ad}'),
-               $this->button(3, 1, 'my_ads', '{my_ads}'),
-               $this->button(3, 1, 'contacts', '{contacts}'),
-               $this->button(6, 1, 'edit_country', '{edit_country}')
+               $this->button(6, 1, 'search_channels', '{search_channels}'),
+               $this->button(6, 1, 'add_channel', '{add_channel}'),
+               $this->button(6, 1, 'contacts', '{contacts}'),
            ];
     }
 
@@ -148,6 +146,28 @@ class ButtonsViber {
     public function getLocation() {
         return [
             $this->button_location(6, 1, '{send_location}'),
+            $this->button(6, 1, 'back', '{back}')
+        ];
+    }
+
+    public function languages($languages) {
+        $buttons[] = $this->button(6, 1, 'language__0', DEFAULT_LANGUAGE);
+        foreach($languages as $language) {
+            $buttons[] = $this->button(
+                6,
+                1,
+                'language__'.$language->code,
+                base64_decode($language->emoji).' '.$language->name
+            );
+        }
+        return $buttons;
+    }
+
+    public function search_channels() {
+        return [
+            $this->button(6, 1, 'search_top', '{search_top}'),
+            $this->button(3, 1, 'search_by_countries', '{search_by_countries}'),
+            $this->button(3, 1, 'search_by_categories', '{search_by_categories}'),
             $this->button(6, 1, 'back', '{back}')
         ];
     }

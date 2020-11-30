@@ -14,8 +14,13 @@ class ParserTelegram {
     }
 
     public function checkLink() {
-        preg_match_all("/https\:\/\/t\.me\/(.+)/", $this->link, $matches);
+        preg_match_all("/(https\:\/\/t\.me\/.+)/", $this->link, $matches);
         return isset($matches[1][0]) ? true : false;
+    }
+
+    public function getLink() {
+        preg_match_all("/(https\:\/\/t\.me\/.+)/", $this->link, $matches);
+        return isset($matches[1][0]) ? trim(trim($matches[1][0], '"')) : null;
     }
 
     private function getPage() {

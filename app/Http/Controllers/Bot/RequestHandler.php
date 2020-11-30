@@ -7,8 +7,10 @@ use App\models\BotUsers;
 use App\models\buttons\InlineButtons;
 use App\models\Channel;
 use App\models\ChannelOfModeration;
+use App\models\Language;
 use App\models\Messenger;
 use App\models\ParserTelegram;
+use App\models\ParserViber;
 use Exception;
 
 class RequestHandler extends BaseRequestHandler {
@@ -23,6 +25,12 @@ class RequestHandler extends BaseRequestHandler {
         }
         else {
             $this->send('{select_language}');
+            $languages = Language::all();
+            $count = count($languages) + 1;
+            $this->sendCarusel([
+                'rows' => $count,
+                'richMedia' => $this->buttons()->languages($languages)
+            ]);
         }
     }
 
@@ -42,7 +50,8 @@ class RequestHandler extends BaseRequestHandler {
 
     public function add_channel() {
         $this->send('{send_link_to_channel}', [
-            'buttons' => $this->buttons()->back()
+            'buttons' => $this->buttons()->back(),
+            'input' => 'regular'
         ]);
 
         $this->setInteraction('add_channel_send_link');
@@ -50,45 +59,53 @@ class RequestHandler extends BaseRequestHandler {
 
     public function add_channel_send_link() {
         $link = $this->getMessage();
-        if(ChannelOfModeration::where('link', $link)->exists() || Channel::where('link', $link)->exists()) {
-            $this->send('{channel_has_already_added_to_the_catalog}', [
-                'buttons' => $this->buttons()->back()
-            ]);
-            return;
-        }
-
         if(MESSENGER == "Telegram") {
             $parser = new ParserTelegram($link);
-            if($parser->checkLink()) {
-                try {
-                    $channel = new ChannelOfModeration();
-                    $channel->link = $link;
-                    $channel->users_id = $this->getUserId();
+        }
+        else {
+            $parser = new ParserViber($link);
+        }
 
-                    $messenger = Messenger::where('name', MESSENGER)->first();
+        $link = $parser->getLink();
 
-                    $channel->messenger_id = $messenger->id;
-                    $channel->date = date('Y-m-d');
-                    $channel->time = date('H:i:s');
-                    $channel->save();
+        if(ChannelOfModeration::where('link', $link)->exists() || Channel::where('link', $link)->exists()) {
+            return $this->send('{channel_has_already_added_to_the_catalog}', [
+                'buttons' => $this->buttons()->back(),
+                'input' => 'regular'
+            ]);
+        }
 
-                    $this->send('{channel_added_successfully}', [
-                        'buttons' => $this->buttons()->main_menu()
-                    ]);
-                }
-                catch (Exception $e) {
-                    $this->send('{error}', [
-                        'buttons' => $this->buttons()->back()
-                    ], [
-                        'error' => $e->getMessage()
-                    ]);
-                }
-            }
-            else {
-                $this->send('{send_link_like}', [
-                    'buttons' => $this->buttons()->back()
+        if($parser->checkLink()) {
+            try {
+                $channel = new ChannelOfModeration();
+                $channel->link = $parser->getLink();
+                $channel->users_id = $this->getUserId();
+
+                $messenger = Messenger::where('name', MESSENGER)->first();
+
+                $channel->messenger_id = $messenger->id;
+                $channel->date = date('Y-m-d');
+                $channel->time = date('H:i:s');
+                $channel->save();
+
+                $this->send('{channel_added_successfully}', [
+                    'buttons' => $this->buttons()->main_menu()
                 ]);
             }
+            catch (Exception $e) {
+                $this->send('{error}', [
+                    'buttons' => $this->buttons()->back(),
+                    'input' => 'regular'
+                ], [
+                    'error' => $e->getMessage()
+                ]);
+            }
+        }
+        else {
+            $this->send('{send_link_like}', [
+                'buttons' => $this->buttons()->back(),
+                'input' => 'regular'
+            ]);
         }
     }
 }
