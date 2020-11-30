@@ -171,4 +171,31 @@ class ButtonsViber {
             $this->button(6, 1, 'back', '{back}')
         ];
     }
+
+    public function moreBack() {
+        return [
+            $this->button(6, 1, 'more', '{more}'),
+            $this->button(6, 1, 'back', '{back}')
+        ];
+    }
+
+    public function channels($channels) {
+        $buttons = [];
+        foreach($channels as $channel) {
+            $buttons[] = $this->button_img(
+                6,
+                6,
+                'open-url',
+                $channel->channel->link,
+                url('/img/icons_channels/'.$channel->channel->avatar)
+            );
+            $buttons[] = $this->button_url(
+                6,
+                1,
+                $channel->channel->link,
+                $channel->channel->name
+            );
+        }
+        return $buttons;
+    }
 }

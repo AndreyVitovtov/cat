@@ -57,4 +57,11 @@ class ButtonsTelegram {
             ['{back}']
         ];
     }
+
+    public function moreBack() {
+        return [
+            ['{more}'],
+            ['{back}']
+        ];
+    }
 }

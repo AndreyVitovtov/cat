@@ -65,4 +65,11 @@ class InlineButtons {
 
         return $buttons;
     }
+
+    public static function channel($link) {
+        return [[[
+            "text" => "Перейти",
+            "url" => $link
+        ]]];
+    }
 }

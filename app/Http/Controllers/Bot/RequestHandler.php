@@ -11,6 +11,8 @@ use App\models\Language;
 use App\models\Messenger;
 use App\models\ParserTelegram;
 use App\models\ParserViber;
+use App\Services\Contracts\BotService;
+use App\Services\Contracts\ChannelService;
 use Exception;
 
 class RequestHandler extends BaseRequestHandler {
@@ -107,5 +109,44 @@ class RequestHandler extends BaseRequestHandler {
                 'input' => 'regular'
             ]);
         }
+    }
+
+    public function search_top($page = 0) {
+        if(substr($this->getMessage(), 0, 4) == "http") return;
+
+        $channelsAll = $this->channelService->getTop();
+        $channels = $channelsAll->chunk(10);
+        $this->setInteraction('search_top', [
+            'page' => (int) $page + 1
+        ]);
+
+        $this->send('{top_channels}', [
+            'buttons' => isset($channels[(int) $page + 1]) ? $this->buttons()->moreBack() : $this->buttons()->back()
+        ]);
+
+        if(MESSENGER == "Telegram") {
+            foreach($channels[(int) $page] as $channel) {
+                $this->sendPhoto(
+                    url('/img/icons_channels/'.$channel->channel->avatar),
+                    $channel->channel->name,
+                    [
+                        'inlineButtons' => InlineButtons::channel($channel->channel->link)
+                    ]
+                );
+            }
+        }
+        else {
+            $this->sendCarusel([
+                'richMedia' => $this->buttons()->channels($channels[(int) $page]),
+                'buttons' => isset($channels[(int) $page + 1]) ? $this->buttons()->moreBack() : $this->buttons()->back()
+            ]);
+        }
+    }
+
+    public function more() {
+        $interaction = $this->getInteraction();
+        $params = json_decode($interaction['params']);
+        $method = $interaction['command'];
+        $this->$method($params->page);
     }
 }

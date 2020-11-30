@@ -13,14 +13,17 @@ use App\models\ContactsModel;
 use App\models\ContactsType;
 use App\models\Language;
 use App\Services\Contracts\BotService;
+use App\Services\Contracts\ChannelService;
 use Illuminate\Support\Facades\Log;
 
 trait RequestHandlerTrait {
     private $messenger;
     private $botService;
+    private $channelService;
 
-    public function __construct(BotService $botService) {
+    public function __construct(BotService $botService, ChannelService $channelService) {
         $this->botService = $botService;
+        $this->channelService = $channelService;
 
         $headers = getallheaders();
         if(isset($_SERVER['HTTP_X_VIBER_CONTENT_SIGNATURE'])) {
@@ -30,7 +33,7 @@ trait RequestHandlerTrait {
             $this->messenger = "Facebook";
         }
         else {
-            $this->messenger = "Telegram";
+            $this->messenger = "Viber";
         }
 
         define("MESSENGER", $this->messenger);

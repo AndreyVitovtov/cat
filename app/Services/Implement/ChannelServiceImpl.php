@@ -127,7 +127,7 @@ class ChannelServiceImpl implements ChannelService {
         foreach($tops as $t) {
             $top[] = $t->top_id;
         }
-
+//->inRandomOrder()
         $topList = Top::with('channel')->whereIn('id', $top)->get();
         $other = Top::with('channel')->whereNotIn('id', $top)->get();
 
