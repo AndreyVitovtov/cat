@@ -14,6 +14,33 @@
     <div class="channels">
         <div>
             <div class="overflow-X-auto">
+                <form action="{{ route('channels') }}" id="switch-messenger">
+                </form>
+                <div class="switch">
+                    <input type="radio" name="switch-messenger" value="Telegram" id="telegram" class="telegram hidden"
+                           onchange="sendForm()"
+                           @if($messenger == 'Telegram')
+                           checked
+                        @endif
+                    >
+                    <input type="radio" name="switch-messenger" value="Viber" id="viber" class="viber hidden"
+                           onchange="sendForm()"
+                           @if($messenger == 'Viber')
+                           checked
+                        @endif
+                    >
+                    <span class="left">
+                        <label for="viber">
+                            Viber
+                        </label>
+                    </span>
+                    <span class="right">
+                        <label for="telegram">
+                            Telegram
+                        </label>
+                    </span>
+                </div>
+                <br>
                 <table>
                     <tr>
                         <td><input type="checkbox" name="check_all" id="check_all"></td>
@@ -40,6 +67,7 @@
                                 <div>
                                     <form action="{{ route('channels-edit') }}" method="POST" id="form-edit-{{ $channel->id }}">
                                         @csrf
+                                        <input type="hidden" name="messenger" value="{{ $messenger }}">
                                         <input type="hidden" name="id" value="{{ $channel->id }}">
                                         <button form="form-edit-{{ $channel->id }}">
                                             <i class='icon-pen'></i>
@@ -48,6 +76,7 @@
 
                                     <form action="{{ route('channels-delete') }}" method="POST" id="form-delete-{{ $channel->id }}">
                                         @csrf
+                                        <input type="hidden" name="messenger" value="{{ $messenger }}">
                                         <input type="hidden" name="id" value="{{ $channel->id }}">
                                         <button form="form-delete-{{ $channel->id }}">
                                             <i class='icon-trash-empty'></i>
@@ -65,8 +94,18 @@
         <div>
             <form action="{{ route('channels-add-top') }}" method="POST" id="add_to_top">
                 @csrf
+                <input type="hidden" name="messenger" value="{{ $messenger }}">
             </form>
             <button form="add_to_top" class="button">@lang('pages.add_to_top')</button>
         </div>
     </div>
+
+    <script>
+        function sendForm() {
+            let value = $('input[name=switch-messenger]:checked').val();
+            let action = $('#switch-messenger').attr('action')+"/"+value;
+            $('#switch-messenger').attr('action', action);
+            $('#switch-messenger').submit();
+        }
+    </script>
 @endsection

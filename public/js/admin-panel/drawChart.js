@@ -1,6 +1,6 @@
 "use strict"
 
-function drawChart(staistics, staistics2, staistics3, texts) {
+function drawChart(staistics, staistics2, staistics3, staistics5, texts) {
 // Create the data table.
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'Дата');
@@ -15,6 +15,11 @@ function drawChart(staistics, staistics2, staistics3, texts) {
     var data3 = google.visualization.arrayToDataTable([
         ['', 'Telegram', 'Viber'],
         [texts.users_count, statistics3.data.Telegram, statistics3.data.Viber]
+    ]);
+
+    var data5 = google.visualization.arrayToDataTable([
+        ['', 'Telegram', 'Viber'],
+        [texts.count_channels, statistics5.data.Telegram, statistics5.data.Viber]
     ]);
 
     // var data4 = google.visualization.arrayToDataTable([
@@ -43,6 +48,13 @@ function drawChart(staistics, staistics2, staistics3, texts) {
         'colors':['#0088cc', '#665CAC']
     };
 
+    var options5 = {
+        'title':texts.count_channels_by_messengers,
+        'width':'100%',
+        'height':300,
+        'colors':['#0088cc', '#665CAC']
+    };
+
     // var options4 = {
     //     'title':'Доступ',
     //     'width':'100%',
@@ -59,6 +71,9 @@ function drawChart(staistics, staistics2, staistics3, texts) {
 
     var chart3 = new google.visualization.BarChart(document.getElementById('chart_div_3'));
     chart3.draw(data3, options3);
+
+    var chart5 = new google.visualization.BarChart(document.getElementById('chart_div_5'));
+    chart5.draw(data5, options5);
 
     // var chart4 = new google.visualization.BarChart(document.getElementById('chart_div_4'));
     // chart4.draw(data4, options4);

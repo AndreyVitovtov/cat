@@ -14,6 +14,33 @@
     <div class="top-list">
         <div>
             <div class="overflow-X-auto">
+                <form action="{{ route('top-list-top') }}" id="switch-messenger">
+                </form>
+                <div class="switch">
+                    <input type="radio" name="switch-messenger" value="Telegram" id="telegram" class="telegram hidden"
+                    onchange="sendForm()"
+                    @if($messenger == 'Telegram')
+                        checked
+                    @endif
+                    >
+                    <input type="radio" name="switch-messenger" value="Viber" id="viber" class="viber hidden"
+                    onchange="sendForm()"
+                    @if($messenger == 'Viber')
+                       checked
+                    @endif
+                    >
+                    <span class="left">
+                        <label for="viber">
+                            Viber
+                        </label>
+                    </span>
+                    <span class="right">
+                        <label for="telegram">
+                            Telegram
+                        </label>
+                    </span>
+                </div>
+                <br>
                 <table>
                     <tr>
                         <td>@lang('pages.top')</td>
@@ -42,8 +69,18 @@
         <div>
             <form action="{{ route('top-list-top-save') }}" method="POST" id="top-form">
                 @csrf
+                <input type="hidden" name="messenger" value="{{ $messenger }}">
                 <input type="submit" value="@lang('pages.save')" class="button">
             </form>
         </div>
     </div>
+
+    <script>
+        function sendForm() {
+            let value = $('input[name=switch-messenger]:checked').val();
+            let action = $('#switch-messenger').attr('action')+"/"+value;
+            $('#switch-messenger').attr('action', action);
+            $('#switch-messenger').submit();
+        }
+    </script>
 @endsection

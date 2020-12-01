@@ -15,6 +15,7 @@
         <div>
             <form action="{{ route('channels-edit-save') }}" method="POST">
                 @csrf
+                <input type="hidden" name="messenger" value="{{ $messenger }}">
                 <input type="hidden" name="id" value="{{ $channel->id }}">
                 <div>
                     <label for="name">@lang('pages.channel')</label>

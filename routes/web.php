@@ -158,9 +158,9 @@ Route::group(['middleware' => 'auth', 'prefix'=>'admin'], function() {
         });
 
         Route::group(['prefix' => 'channels', 'middleware' => 'access:channels'], function () {
-            Route::get('/', "Admin\ChannelsController@index")->name('channels');
-            Route::get('/moderation', "Admin\ChannelsController@moderation")->name('channels-moderation');
-            Route::get('/top', "Admin\ChannelsController@top")->name('channels-top');
+            Route::get('/{messenger?}', "Admin\ChannelsController@index")->name('channels');
+            Route::get('/moderation/0', "Admin\ChannelsController@moderation")->name('channels-moderation');
+            Route::get('/top/0/{messenger?}', "Admin\ChannelsController@top")->name('channels-top');
             Route::post('/edit', "Admin\ChannelsController@edit")->name('channels-edit');
             Route::post('/edit/save', "Admin\ChannelsController@editSave")->name('channels-edit-save');
             Route::post('/delete', "Admin\ChannelsController@delete")->name('channels-delete');
@@ -171,13 +171,13 @@ Route::group(['middleware' => 'auth', 'prefix'=>'admin'], function() {
         });
 
         Route::group(['prefix' => 'topList', 'middleware' => 'access:top_list'], function () {
-            Route::get('/top', "Admin\TopListController@top")->name('top-list-top');
-            Route::get('/country', "Admin\TopListController@countries")->name('top-list-country');
-            Route::get('/category', "Admin\TopListController@categories")->name('top-list-category');
+            Route::get('/top/top/{messenger?}', "Admin\TopListController@top")->name('top-list-top');
+            Route::get('/country', "Admin\TopListController@countries")->name('top-list-select-country');
+            Route::get('/category', "Admin\TopListController@categories")->name('top-list-select-category');
             Route::post('/top/save', "Admin\TopListController@topSave")->name('top-list-top-save');
-            Route::get('/top/country', "Admin\TopListController@topCountry")->name('top-list-country');
+            Route::get('/top/country/{country}/{messenger?}', "Admin\TopListController@topCountry")->name('top-list-country');
             Route::post('/top/country/save', "Admin\TopListController@topCountrySave")->name('top-list-country-save');
-            Route::get('/top/category', "Admin\TopListController@topCategory")->name('top-list-category');
+            Route::get('/top/category/{category}/{messenger?}', "Admin\TopListController@topCategory")->name('top-list-category');
             Route::post('/top/category/save', "Admin\TopListController@topCategorySave")->name('top-list-category-save');
         });
     });

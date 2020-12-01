@@ -14,7 +14,7 @@
     <div class="top-list">
         <div>
             <div class="overflow-X-auto">
-                <form action="{{ route('top-list-country') }}" method="GET">
+                <form action="{{ route('top-list-country', ['country' => 0]) }}" method="GET" id="form">
                     <div>
                         <label for="select-country">@lang('pages.select_country')</label>
                         <select name="country" id="select-country">
@@ -31,4 +31,15 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $('body').on('click', '.button', function(e) {
+            e.preventDefault();
+            let country = $('#select-country').val();
+            let action = $('#form').attr('action');
+            action = action.substring(0, action.length - 1)+country;
+            $('#form').attr('action', action);
+            $('#form').submit();
+        });
+    </script>
 @endsection

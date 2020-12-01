@@ -73,11 +73,11 @@
         ],[
            'name' => 'channels_moderation',
            'menu' => 'channelsmoderation',
-           'url' => '/admin/channels/moderation'
+           'url' => '/admin/channels/moderation/0'
         ], [
            'name' => 'channels_top',
            'menu' => 'channelstop',
-           'url' => '/admin/channels/top'
+           'url' => '/admin/channels/top/0'
         ]
     ]])
 @endcomponent
@@ -91,7 +91,7 @@
         'items' => [[
                'name' => 'channels_top_list_by_top',
                'menu' => 'toplisttop',
-               'url' => '/admin/topList/top'
+               'url' => '/admin/topList/top/top'
             ], [
                'name' => 'channels_top_list_by_country',
                'menu' => 'toplistcountry',

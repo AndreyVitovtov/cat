@@ -15,6 +15,7 @@
         let statistics2 = {};
         let statistics3 = {};
         let statistics4 = {};
+        let statistics5 = {};
 
         let texts = {};
 
@@ -24,10 +25,12 @@
         texts.users_count = "@lang('pages.statistics_users_count')";
         texts.count_users_country = "@lang('pages.statistics_count_users')";
         texts.count_users_messengers = "@lang('pages.statistics_count_users_messengers')";
+        texts.count_channels = "@lang('pages.count_channels')";
+        texts.count_channels_by_messengers = "@lang('pages.count_channels_by_messengers')";
 
 
-        statistics.data = {!! json_encode($data) !!}
-        console.log(statistics);
+        {{--statistics.data = {!! json_encode($data) !!}--}}
+        {{--console.log(statistics);--}}
 
         statistics2.data = {!! json_encode($countries) !!}
             statistics2.title = "@lang('pages.statistics_count_users')";
@@ -35,6 +38,9 @@
 
         statistics3.data = {!! json_encode($messengers) !!}
         console.log(statistics3);
+
+        statistics5.data = {!! json_encode($channels) !!}
+        console.log(statistics5);
 
         statistics.data = {!! json_encode($data) !!}
         console.log(statistics);
@@ -47,7 +53,7 @@
         // по окончанию загрузки API визуализации.
         google.setOnLoadCallback(function() {
 
-            drawChart(statistics, statistics2, statistics3, texts);
+            drawChart(statistics, statistics2, statistics3, statistics5, texts);
         });
     </script>
 
@@ -61,7 +67,7 @@
         <div id="chart_div"></div>
     </div>
     <div class="chart_statistics_2">
-        <div id="chart_div_4"></div>
+        <div id="chart_div_5"></div>
     </div>
 
 

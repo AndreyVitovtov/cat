@@ -248,5 +248,8 @@ return [
     'added_channel_all' => 'All',
     'added_channel_yes' => 'Yes',
     'added_channel_no' => 'No',
-    'added_channel' => 'Added channel:'
+    'added_channel' => 'Added channel:',
+    'messenger' => 'Messenger',
+    'count_channels_by_messengers' => 'Number of channels by messengers',
+    'count_channels' => 'Count of channels'
 ];

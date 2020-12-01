@@ -9,6 +9,7 @@ use App\models\Channel;
 use App\models\ChannelOfModeration;
 use App\models\ChannelsHasTop;
 use App\models\Country;
+use App\models\Messenger;
 use App\models\ParserTelegram;
 use App\models\ParserViber;
 use App\models\Top;
@@ -121,44 +122,54 @@ class ChannelServiceImpl implements ChannelService {
         }
     }
 
-    function getTop(): Collection {
+    function getTop(string $messenger): Collection {
         $top = [];
         $tops = ChannelsHasTop::all('top_id');
         foreach($tops as $t) {
             $top[] = $t->top_id;
         }
+        $messenger = Messenger::where('name', $messenger)->first('id');
 //->inRandomOrder()
-        $topList = Top::with('channel')->whereIn('id', $top)->get();
-        $other = Top::with('channel')->whereNotIn('id', $top)->get();
-
+        $topList = Top::with('channel')
+            ->join('channels', 'channels.id', '=', 'top.channels_id')
+            ->where('channels.messenger_id', $messenger->id)
+            ->whereIn('top.id', $top)->get('top.*');
+        $other = Top::with('channel')
+            ->join('channels', 'channels.id', '=', 'top.channels_id')
+            ->where('channels.messenger_id', $messenger->id)
+            ->whereNotIn('top.id', $top)->get('top.*');
         return $topList->merge($other);
     }
 
-    function getByCountry(int $countryId): Collection {
+    function getByCountry(int $countryId, string $messenger): Collection {
         $top = [];
         $tops = Country::with('topChannels')->where('id', $countryId)->first();
-
         foreach($tops->topChannels as $t) {
             $top[] = $t->id;
         }
-
-        $topList = Channel::where('countries_id', $countryId)->whereIn('id', $top)->get();
-        $other = Channel::where('countries_id', $countryId)->whereNotIn('id', $top)->get();
-
+        $messenger = Messenger::where('name', $messenger)->first('id');
+        $topList = Channel::where('countries_id', $countryId)
+            ->where('messenger_id', $messenger->id)
+            ->whereIn('id', $top)->get();
+        $other = Channel::where('countries_id', $countryId)
+            ->where('messenger_id', $messenger->id)
+            ->whereNotIn('id', $top)->get();
         return $topList->merge($other);
     }
 
-    function getByCategory(int $categoryId): Collection {
+    function getByCategory(int $categoryId, string $messenger): Collection {
         $top = [];
         $tops = Category::with('topChannels')->where('id', $categoryId)->first();
-
         foreach($tops->topChannels as $t) {
             $top[] = $t->id;
         }
-
-        $topList = Channel::where('categories_id', $categoryId)->whereIn('id', $top)->get();
-        $other = Channel::where('categories_id', $categoryId)->whereNotIn('id', $top)->get();
-
+        $messenger = Messenger::where('name', $messenger)->first('id');
+        $topList = Channel::where('categories_id', $categoryId)
+            ->where('messenger_id', $messenger->id)
+            ->whereIn('id', $top)->get();
+        $other = Channel::where('categories_id', $categoryId)
+            ->where('messenger_id', $messenger->id)
+            ->whereNotIn('id', $top)->get();
         return $topList->merge($other);
     }
 }

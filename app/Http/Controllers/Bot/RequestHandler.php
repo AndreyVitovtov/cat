@@ -114,7 +114,7 @@ class RequestHandler extends BaseRequestHandler {
     public function search_top($page = 0) {
         if(substr($this->getMessage(), 0, 4) == "http") return;
 
-        $channelsAll = $this->channelService->getTop();
+        $channelsAll = $this->channelService->getTop(MESSENGER);
         $channels = $channelsAll->chunk(10);
         $this->setInteraction('search_top', [
             'page' => (int) $page + 1

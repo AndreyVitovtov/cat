@@ -25,10 +25,14 @@ class ChannelsController extends Controller {
         $this->channelService = $channelService;
     }
 
-    public function index() {
+    public function index($messenger = 'Viber') {
         return view('admin.channels.index', [
-            'channels' => Channel::with(['messenger', 'country', 'category'])->paginate(25),
-            'menuItem' => 'channelslist'
+            'channels' => Channel::with(['messenger', 'country', 'category'])
+                ->join('messenger', 'messenger.id', '=', 'channels.messenger_id')
+                ->where('messenger.name', $messenger)
+                ->paginate(25, 'channels.*'),
+            'menuItem' => 'channelslist',
+            'messenger' => $messenger
         ]);
     }
 
@@ -51,10 +55,11 @@ class ChannelsController extends Controller {
         return redirect()->to(route('channels-moderation'));
     }
 
-    public function top() {
+    public function top($messenger = 'Viber') {
         return view('admin.top.index', [
-            'tops' => Top::paginate(25),
-            'menuItem' => 'channelstop'
+            'tops' => $this->channelService->getTop($messenger),
+            'menuItem' => 'channelstop',
+            'messenger' => $messenger
         ]);
     }
 
@@ -65,7 +70,9 @@ class ChannelsController extends Controller {
             unlink($path);
         }
         Channel::where('id', $channel->id)->delete();
-        return redirect()->to(route('channels'));
+        return redirect()->to(route('channels', [
+            'messenger' => $request->post('messenger')
+        ]));
     }
 
     public function moderationDelete(Request $request) {
@@ -78,7 +85,8 @@ class ChannelsController extends Controller {
             'menuItem' => 'channelslist',
             'channel' => Channel::find($request->post('id')),
             'countries' => Country::all(),
-            'categories' => Category::all()
+            'categories' => Category::all(),
+            'messenger' => $request->post('messenger')
         ]);
     }
 
@@ -88,7 +96,9 @@ class ChannelsController extends Controller {
         $channel->countries_id = $request->post('country');
         $channel->categories_id = $request->post('category');
         $channel->save();
-        return redirect()->to(route('channels'));
+        return redirect()->to(route('channels', [
+            'messenger' => $request->post('messenger')
+        ]));
     }
 
     public function addTop(Request $request) {
@@ -100,11 +110,15 @@ class ChannelsController extends Controller {
             $top->channels_id = $channel;
             $top->save();
         }
-        return redirect()->to(route('channels-top'));
+        return redirect()->to(route('channels-top', [
+            'messenger' => $request->post('messenger')
+        ]));
     }
 
     public function topDelete(Request $request) {
         Top::where('id', $request->post('id'))->delete();
-        return redirect()->to(route('channels-top'));
+        return redirect()->to(route('channels-top', [
+            'messenger' => $request->post('messenger')
+        ]));
     }
 }

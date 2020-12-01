@@ -249,6 +249,9 @@ return [
     'added_channel_all' => 'Все',
     'added_channel_yes' => 'Да',
     'added_channel_no' => 'Нет',
-    'added_channel' => 'Добавил канал:'
+    'added_channel' => 'Добавил канал:',
+    'messenger' => 'Мессенджер',
+    'count_channels_by_messengers' => 'Количество каналов по мессенджерам',
+    'count_channels' => 'Количество каналов'
 
 ];

@@ -61,6 +61,16 @@ class Statistics extends Controller {
         }
         $view->messengers = $messengers;
 
+        //Статистика по каналам
+        $channel = DB::select("SELECT m.name, COUNT(c.id) as count FROM channels c
+            JOIN messenger m ON c.messenger_id = m.id
+            GROUP BY m.name");
+        $channels = [];
+        foreach($channel as $c) {
+            $channels[$c->name] = $c->count;
+        }
+        $view->channels = $channels;
+
         //Статистика по доступу
         $accessNo = DB::select("SELECT COUNT(*) AS count FROM users WHERE access = '0'");
         $accessPaid = DB::select("SELECT COUNT(*) AS count FROM users WHERE access = '1' AND access_free = '0'");

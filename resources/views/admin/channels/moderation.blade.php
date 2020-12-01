@@ -18,6 +18,7 @@
                     <tr>
                         <td>№</td>
                         <td>@lang('pages.channel')</td>
+                        <td>@lang('pages.messenger')</td>
                         <td>@lang('pages.country')</td>
                         <td>@lang('pages.category')</td>
                         <td>@lang('pages.actions')</td>
@@ -30,6 +31,9 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>
                                 <a href="{{ $channel->link }}" target="_blank" class="link">{{ $channel->link }}</a>
+                            </td>
+                            <td>
+                                {{ $channel->messenger->name }}
                             </td>
                             <td>
                                 <select name="country" id="country_{{ $channel->id }}">

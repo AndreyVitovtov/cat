@@ -14,7 +14,7 @@
     <div class="top-list">
         <div>
             <div class="overflow-X-auto">
-                <form action="{{ route('top-list-category') }}" method="GET">
+                <form action="{{ route('top-list-category', ['category' => 0]) }}" method="GET" id="form">
                     <div>
                         <label for="select-category">@lang('pages.select_category')</label>
                         <select name="category" id="select-category">
@@ -31,4 +31,15 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $('body').on('click', '.button', function(e) {
+            e.preventDefault();
+            let category = $('#select-category').val();
+            let action = $('#form').attr('action');
+            action = action.substring(0, action.length - 1)+category;
+            $('#form').attr('action', action);
+            $('#form').submit();
+        });
+    </script>
 @endsection
