@@ -3,6 +3,8 @@
 namespace App\models\buttons;
 
 use App\models\BotUsers;
+use App\models\Category;
+use App\models\Country;
 use App\models\Language;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -71,5 +73,67 @@ class InlineButtons {
             "text" => "{go}",
             "url" => $link
         ]]];
+    }
+
+    public static function countries(int $page) {
+        $countries = Country::all();
+        $countries = $countries->chunk(10);
+        $buttons = [];
+        foreach ($countries[$page] as $country) {
+            $buttons[] = [[
+                'text' => $country->name,
+                'callback_data' => 'select_country__'.$country->id
+            ]];
+        }
+
+        $prevPage = $page - 1;
+        $nextPage = $page + 1;
+
+        if($page > 0) {
+            $buttons[] = [[
+                'text' => '{prev}',
+                'callback_data' => 'search_by_countries__'.$prevPage
+            ]];
+        }
+
+        if(isset($countries[$page + 1])) {
+            $buttons[] = [[
+                'text' => '{next}',
+                'callback_data' => 'search_by_countries__'.$nextPage
+            ]];
+        }
+
+        return $buttons;
+    }
+
+    public static function categories(int $page) {
+        $categories = Category::all();
+        $categories = $categories->chunk(10);
+        $buttons = [];
+        foreach ($categories[$page] as $category) {
+            $buttons[] = [[
+                'text' => $category->name,
+                'callback_data' => 'select_category__'.$category->id
+            ]];
+        }
+
+        $prevPage = $page - 1;
+        $nextPage = $page + 1;
+
+        if($page > 0) {
+            $buttons[] = [[
+                'text' => '{prev}',
+                'callback_data' => 'search_by_categories__'.$prevPage
+            ]];
+        }
+
+        if(isset($categories[$page + 1])) {
+            $buttons[] = [[
+                'text' => '{next}',
+                'callback_data' => 'search_by_categories__'.$nextPage
+            ]];
+        }
+
+        return $buttons;
     }
 }

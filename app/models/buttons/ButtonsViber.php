@@ -3,6 +3,8 @@
 namespace App\models\buttons;
 
 use App\models\BotUsers;
+use App\models\Category;
+use App\models\Country;
 use App\models\SettingsButtons;
 
 class ButtonsViber {
@@ -197,5 +199,71 @@ class ButtonsViber {
             );
         }
         return $buttons;
+    }
+
+    public function channels2($channels) {
+        $buttons = [];
+        foreach($channels as $channel) {
+            $buttons[] = $this->button_img(
+                6,
+                6,
+                'open-url',
+                $channel->link,
+                url('/img/icons_channels/'.$channel->avatar)
+            );
+            $buttons[] = $this->button_url(
+                6,
+                1,
+                $channel->link,
+                $channel->name
+            );
+        }
+        return $buttons;
+    }
+
+    public function countries(int $page) {
+        $countries = Country::all();
+        $countries = $countries->chunk(26);
+        $buttons = [];
+        foreach ($countries[$page] as $country) {
+            $buttons[] = $this->button(6, 1, 'select_country__'.$country->id, $country->name);
+        }
+
+        $prevPage = $page - 1;
+        $nextPage = $page + 1;
+
+        if($page > 0) {
+            $buttons[] = $this->button(6, 1, 'search_by_countries__'.$prevPage, '{prev}');
+        }
+
+        if(isset($countries[$page + 1])) {
+            $buttons[] = $this->button(6, 1, 'search_by_countries__'.$nextPage, '{next}');
+        }
+        return $buttons;
+    }
+
+    public function categories(int $page) {
+        $categories = Category::all();
+        $categories = $categories->chunk(26);
+        $buttons = [];
+        foreach ($categories[$page] as $category) {
+            $buttons[] = $this->button(6, 1, 'select_category__'.$category->id, $category->name);
+        }
+
+        $prevPage = $page - 1;
+        $nextPage = $page + 1;
+
+        if($page > 0) {
+            $buttons[] = $this->button(6, 1, 'search_by_categories__'.$prevPage, '{prev}');
+        }
+
+        if(isset($categories[$page + 1])) {
+            $buttons[] = $this->button(6, 1, 'search_by_categories__'.$nextPage, '{next}');
+        }
+        return $buttons;
+    }
+
+    public function search_categories() {
+
     }
 }

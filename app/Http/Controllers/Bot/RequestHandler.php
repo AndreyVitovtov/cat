@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Bot;
 use App\Http\Controllers\Bot\Traits\RequestHandlerTrait;
 use App\models\BotUsers;
 use App\models\buttons\InlineButtons;
+use App\models\Category;
 use App\models\Channel;
 use App\models\ChannelOfModeration;
+use App\models\Country;
 use App\models\Language;
 use App\models\Messenger;
 use App\models\ParserTelegram;
@@ -143,10 +145,136 @@ class RequestHandler extends BaseRequestHandler {
         }
     }
 
+    public function search_by_countries($page = 0) {
+        $page = (int) $page;
+        if(MESSENGER == "Telegram") {
+            $this->send('{select_country}', [
+                'inlineButtons' => InlineButtons::countries($page)
+            ]);
+        }
+        else {
+            $this->sendCarusel([
+                'richMedia' => $this->buttons()->countries($page),
+                'buttons' => $this->buttons()->search_channels()
+            ]);
+        }
+    }
+
+    public function select_country($c) {
+        if(substr($this->getMessage(), 0, 4) == "http") return;
+
+        $page = 0;
+        $country = $c;
+
+        if(is_array($c)) {
+            $country = $c[0];
+            $page = $c[1];
+        }
+
+        $channelsAll = $this->channelService->getByCountry($country, MESSENGER);
+        $channels = $channelsAll->chunk(10);
+        $this->setInteraction('select_country', [
+            'page' => (int) $page + 1,
+            'country' => (int) $country
+        ]);
+
+        $this->send('{channels_by_country}', [
+            'buttons' => isset($channels[(int) $page + 1]) ? $this->buttons()->moreBack() : $this->buttons()->back()
+        ], [
+            'country' => Country::find($country)->name
+        ]);
+
+        if(MESSENGER == "Telegram") {
+            foreach($channels[(int) $page] as $channel) {
+                $this->sendPhoto(
+                    url('/img/icons_channels/'.$channel->avatar),
+                    $channel->name,
+                    [
+                        'inlineButtons' => InlineButtons::channel($channel->link)
+                    ]
+                );
+            }
+        }
+        else {
+            $this->sendCarusel([
+                'richMedia' => $this->buttons()->channels2($channels[(int) $page]),
+                'buttons' => isset($channels[(int) $page + 1]) ? $this->buttons()->moreBack() : $this->buttons()->back()
+            ]);
+        }
+    }
+
+    public function search_by_categories($page = 0) {
+        $page = (int) $page;
+        if(MESSENGER == "Telegram") {
+            $this->send('{select_category}', [
+                'inlineButtons' => InlineButtons::categories($page)
+            ]);
+        }
+        else {
+            $this->sendCarusel([
+                'richMedia' => $this->buttons()->categories($page),
+                'buttons' => $this->buttons()->search_channels()
+            ]);
+        }
+    }
+
+    public function select_category($c) {
+        if(substr($this->getMessage(), 0, 4) == "http") return;
+
+        $page = 0;
+        $category = $c;
+
+        if(is_array($c)) {
+            $category = $c[0];
+            $page = $c[1];
+        }
+
+        $channelsAll = $this->channelService->getByCategory($category, MESSENGER);
+        $channels = $channelsAll->chunk(10);
+        $this->setInteraction('select_category', [
+            'page' => (int) $page + 1,
+            'category' => (int) $category
+        ]);
+
+        $this->send('{channels_by_category}', [
+            'buttons' => isset($channels[(int) $page + 1]) ? $this->buttons()->moreBack() : $this->buttons()->back()
+        ], [
+            'category' => Category::find($category)->name
+        ]);
+
+        if(MESSENGER == "Telegram") {
+            foreach($channels[(int) $page] as $channel) {
+                $this->sendPhoto(
+                    url('/img/icons_channels/'.$channel->avatar),
+                    $channel->name,
+                    [
+                        'inlineButtons' => InlineButtons::channel($channel->link)
+                    ]
+                );
+            }
+        }
+        else {
+            $this->sendCarusel([
+                'richMedia' => $this->buttons()->channels2($channels[(int) $page]),
+                'buttons' => isset($channels[(int) $page + 1]) ? $this->buttons()->moreBack() : $this->buttons()->back()
+            ]);
+        }
+    }
+
     public function more() {
         $interaction = $this->getInteraction();
         $params = json_decode($interaction['params']);
         $method = $interaction['command'];
-        $this->$method($params->page);
+        if(isset($params->country)) {
+            $this->$method([
+                $params->country,
+                $params->page
+            ]);
+        }
+        else {
+            $this->$method($params->page);
+        }
     }
+
+
 }
